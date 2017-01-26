@@ -416,6 +416,7 @@
 				4B51ABB01E336DD4009A71A5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
