@@ -111,12 +111,14 @@ class Dashboard: UIViewController, ChartViewDelegate {
     
     /*
      
-     Setup for line chart
+     Setup for chart
      
      */
+    
     func setChart(data_points: [FillUp]) {
         var gallons = [Double]();
         var index = data_points.count - 1;
+        // get an array of the last 10 fillups' data from FillUps
         while(index >= 0) {
             gallons.append(data_points[index].getGallons());
             if gallons.count >= 10 {
@@ -124,68 +126,22 @@ class Dashboard: UIViewController, ChartViewDelegate {
             }
             index -= 1;
         }
+        
+        // reverse the data so that it appears in chronological order
         gallons = gallons.reversed();
-        /*
-        var yvals: [ChartDataEntry] = [ChartDataEntry]();
-        for index in 0 ..< dates.count {
-            yvals.append(ChartDataEntry(x: gallons[index], y: Double(index)));
-        }
-        let set1: LineChartDataSet = LineChartDataSet(values: yvals, label: "gallons");
         
-        set1.axisDependency = .left;
-        set1.setColor(UIColor.red.withAlphaComponent(0.5));
-        set1.setCircleColor(UIColor.red);
-        set1.lineWidth = 2.0;
-        set1.circleRadius = 6.0;
-        set1.fillAlpha = 65 / 255.0;
-        set1.fillColor = UIColor.red;
-        set1.highlightColor = UIColor.white;
-        set1.drawCircleHoleEnabled = true;
-        
-        let chartData = LineChartData(dataSet: set1);
-        chart.data = chartData;
-        */
-        
-        
-        
-        /*
-         func setChart(dataPoints: [String], values: [Double]){
-            historyGraph!.noDataText = "Not enough data yet";
-            var dataEntries: [BarChartDataEntry] = []
-         
-            for i in 0..<dataPoints.count {
-                let dataEntry = BarChartDataEntry(value: values[i], xIndex: i)
-                dataEntries.append(dataEntry)
-            }
-         
-            let chartDataSet = BarChartDataSet(yVals: dataEntries, label: "GallonsPurchased")
-            let chartData = BarChartData(xVals: dates, dataSet: chartDataSet)
-            historyGraph!.data = chartData
-         }
- 
-        
-        var data_entries: [BarChartDataEntry] = [];
-        for i in (0...gallons.count - 1).reversed() {
-            let data_entry = BarChartDataEntry(x: Double(i), y: gallons[i]);
-            data_entries.append(data_entry);
-        }
-        
-        let chart_data_set = BarChartDataSet(values: data_entries, label: "Gallons Purchased");
-        chart_data_set.setColor(UIColor.red.withAlphaComponent(1.00));
-        chart_data_set.barBorderColor = NSUIColor.black;
-        let chart_data = BarChartData(dataSet: chart_data_set);
-        chart.animate(xAxisDuration: 1000, yAxisDuration: 1000);
-        chart.chartXMin = 0
-        chart.data = chart_data
-        */
-        
+        // create bar chart entries for the data and append them to an array
         var data_entries = [BarChartDataEntry]();
         for i in 0..<gallons.count {
             let data_entry = BarChartDataEntry(x: Double(i), yValues: [gallons[i]]);
             data_entries.append(data_entry);
         }
+        
+        // create a dataset from the array and assign the dataset to the chart
         let chart_data_set = BarChartDataSet(values: data_entries.reversed(), label: "Gallons purchased");
         let chart_data = BarChartData(dataSet: chart_data_set);
+        
+        // beautify the chart
         chart_data_set.barBorderColor = UIColor.black;
         chart_data_set.barBorderWidth = 2.0;
         chart_data_set.setColor(UIColor.red);

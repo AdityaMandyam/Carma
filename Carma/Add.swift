@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Add: UIViewController {
+class Add: UIViewController, UITextFieldDelegate {
     // UI fields
     @IBOutlet weak var odometerField: UITextField!
     @IBOutlet weak var moneyField: UITextField!
@@ -45,6 +45,10 @@ class Add: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view .endEditing(true);
     }
     
 
